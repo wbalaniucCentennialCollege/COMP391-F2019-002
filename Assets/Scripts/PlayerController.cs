@@ -10,6 +10,9 @@ public class PlayerController : MonoBehaviour
     public Transform laserSpawn;
     public float fireRate = 0.5f;
 
+    public Vector2 bottomLeftBoundary;
+    public Vector2 topRightBoundary;
+
     // Private variables
     private Rigidbody2D rBody;
     private float counter = 0.0f;
@@ -44,5 +47,10 @@ public class PlayerController : MonoBehaviour
         // Modify players velocity through the rigidbody2D
         
         rBody.velocity = new Vector2(horiz * speed, vert * speed);
+
+        // Restrict the player from leaving the play area
+        rBody.position = new Vector2(
+            Mathf.Clamp(rBody.position.x, bottomLeftBoundary.x, topRightBoundary.x),
+            Mathf.Clamp(rBody.position.y, bottomLeftBoundary.y, topRightBoundary.y));
     }
 }
